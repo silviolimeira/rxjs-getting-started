@@ -1,0 +1,12 @@
+Install rxjs
+$ npm install rxjs
+
+###<
+Chrome recently added support for source maps in the developer tools.
+If you go under settings on the chrome developer toolbar you can see
+the following two options:
+
+Sources:
+  (disable) Enable JavaScripting source maps
+  (disable) Enable CSS source maps
+###>
