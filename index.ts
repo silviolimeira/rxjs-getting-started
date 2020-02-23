@@ -2,17 +2,21 @@ import { allBooks, Book, allReaders } from './data';
 import { Observable, of, from, fromEvent, concat } from 'rxjs';
 
 
-// Creating Observables: Creating Observables from Existing Data
+// Creating Observables: Creating Observables to Handle Events
+//https://app.pluralsight.com/course-player?clipId=976e2d54-dba4-46d8-b544-9b940339c9ca
 
-let source1$ = of('hello', 10, true, allReaders[0].name);
+let button = document.getElementById('readersButton');
 
-//source1$.subscribe(value => console.log(value));
+fromEvent(button, 'click')
+    .subscribe(event => {
+        console.log(event);
 
-let source2$ = from(allBooks);
+        let readersDiv = document.getElementById('readers');
 
-//source2$.subscribe(book => console.log(book.title));
+        for (let reader of allReaders) {
+            readersDiv.innerHTML += reader.name + '<br>';
+        }
+    });
 
-// produces the two values
-concat(source1$, source2$)
-    .subscribe(value => console.log(value));
+
 
