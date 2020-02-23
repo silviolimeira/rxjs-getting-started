@@ -1,22 +1,18 @@
-import { Observable } from 'rxjs';
-import { allBooks, Book } from './data';
+import { allBooks, Book, allReaders } from './data';
+import { Observable, of, from, fromEvent, concat } from 'rxjs';
 
-let allBooksObservable$ = new Observable.create(subscriber => {
 
-    if (document.title !== 'RxBookTracker') {
-        subscriber.error('Incorrect page title.');
-    }
+// Creating Observables: Creating Observables from Existing Data
 
-    for (let book of allBooks) {
-        subscriber.next(book);
-    }
+let source1$ = of('hello', 10, true, allReaders[0].name);
 
-    setTimeout(() => {
-        subscriber.complete();
-    }, 5000);
+//source1$.subscribe(value => console.log(value));
 
-    return () => console.log('Executing teardown code.');
+let source2$ = from(allBooks);
 
-});
+//source2$.subscribe(book => console.log(book.title));
 
-allBooksObservable$.subscribe(book => console.log(book.title));
+// produces the two values
+concat(source1$, source2$)
+    .subscribe(value => console.log(value));
+
