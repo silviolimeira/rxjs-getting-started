@@ -1,21 +1,30 @@
 import { allBooks, Book, allReaders } from './data';
+import { ajax, AjaxResponse } from 'rxjs/ajax';
 import { Observable, of, from, fromEvent, concat } from 'rxjs';
 
 
-// Creating Observables: Creating Observables to Handle Events
-//https://app.pluralsight.com/course-player?clipId=976e2d54-dba4-46d8-b544-9b940339c9ca
+// Creating Observables: Making Ajax Requests with RxJS
+//https://app.pluralsight.com/course-player?clipId=38609224-e746-48f1-9c44-9643cb14c1ae
+
 
 let button = document.getElementById('readersButton');
 
 fromEvent(button, 'click')
     .subscribe(event => {
-        console.log(event);
 
-        let readersDiv = document.getElementById('readers');
+        ajax('/api/readers')
+            .subscribe(ajaxResponse => {
+                console.log(ajaxResponse);
 
-        for (let reader of allReaders) {
-            readersDiv.innerHTML += reader.name + '<br>';
-        }
+                let readers = ajaxResponse.response;
+
+                let readersDiv = document.getElementById('readers');
+
+                for (let reader of readers) {
+                    readersDiv.innerHTML += reader.name + '<br>';
+                }
+
+            })
     });
 
 
