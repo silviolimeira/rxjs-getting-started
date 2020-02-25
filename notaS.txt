@@ -26,4 +26,6 @@ Creating Observables: Creating Observables to Handle Events
 // Subscribing to Observables with Observers: Canceling Observable Execution with Subscription
 // https://app.pluralsight.com/course-player?clipId=33c6a066-6b37-43cf-9982-a53c596f07d4
 
+// Using Operators: Applying Operators
+// https://app.pluralsight.com/course-player?clipId=df9a350e-769f-4110-8c81-c732fa8a75db
 
