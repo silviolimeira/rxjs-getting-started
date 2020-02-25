@@ -1,31 +1,22 @@
-import { allBooks, Book, allReaders } from './data';
-import { ajax, AjaxResponse } from 'rxjs/ajax';
-import { Observable, of, from, fromEvent, concat } from 'rxjs';
+import { allBooks, Book, allReaders } from "./data";
+import { ajax, AjaxResponse } from "rxjs/ajax";
+import { Observable, of, from, fromEvent, concat } from "rxjs";
 
+// Subscribing to Observables with Observer
+// https://app.pluralsight.com/course-player?clipId=af2049ec-fcd3-42a9-94eb-b2aaad5cb708
 
-// Creating Observables: Making Ajax Requests with RxJS
-//https://app.pluralsight.com/course-player?clipId=38609224-e746-48f1-9c44-9643cb14c1ae
+let books$ = from(allBooks);
 
+// let booksObserver = {
+//   next: book => console.log(`Title: ${book.title}`),
+//   error: err => console.log(`ERROR: ${err}`),
+//   complete: () => console.log(`All done!`)
+// };
 
-let button = document.getElementById('readersButton');
+// books$.subscribe(booksObserver);
 
-fromEvent(button, 'click')
-    .subscribe(event => {
-
-        ajax('/api/readers')
-            .subscribe(ajaxResponse => {
-                console.log(ajaxResponse);
-
-                let readers = ajaxResponse.response;
-
-                let readersDiv = document.getElementById('readers');
-
-                for (let reader of readers) {
-                    readersDiv.innerHTML += reader.name + '<br>';
-                }
-
-            })
-    });
-
-
-
+books$.subscribe(
+  book => console.log(`Title: ${book.title}`),
+  err => console.log(`ERROR: ${err}`),
+  () => console.log(`All done! 1`)
+);
