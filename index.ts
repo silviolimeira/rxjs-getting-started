@@ -1,28 +1,20 @@
 import { allBooks, Book, allReaders } from "./data";
 import { ajax, AjaxResponse } from "rxjs/ajax";
-import { Observable, of, from, fromEvent, concat } from "rxjs";
+import { Observable, of, from, fromEvent, concat, interval } from "rxjs";
 
-// Subscribing to Observables with Observers: Multiple Observers Executing a Single Observable
-// https://app.pluralsight.com/course-player?clipId=ef738c17-efd8-409a-933c-99841bb57025
+// Subscribing to Observables with Observers: Canceling Observable Execution with Subscription
+// https://app.pluralsight.com/course-player?clipId=33c6a066-6b37-43cf-9982-a53c596f07d4
 
-let currentTime$ = new Observable(subscriber => {
-  const timeString = new Date().toLocaleTimeString();
-  subscriber.next(timeString);
-  subscriber.complete();
-});
+let timesDiv = document.getElementById("times");
+let button = document.getElementById("timerButton");
 
-currentTime$.subscribe(currentTime =>
-  console.log(`Observer 1: ${currentTime}`)
+let timer$ = interval(1000);
+
+let timerSubscription = timer$.subscribe(
+  value =>
+    (timesDiv.innerHTML += `${new Date().toLocaleDateString()} (${value}) <br>`),
+  null,
+  () => console.log("All done!")
 );
 
-setTimeout(() => {
-  currentTime$.subscribe(currentTime =>
-    console.log(`Observer 2: ${currentTime}`)
-  );
-}, 1000);
-
-setTimeout(() => {
-  currentTime$.subscribe(currentTime =>
-    console.log(`Observer 3: ${currentTime}`)
-  );
-}, 2000);
+fromEvent(button, "click").subscribe(event => timerSubscription.unsubscribe());
