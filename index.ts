@@ -24,9 +24,16 @@ let timer$ = new Observable(subscriber => {
 
 let timerSubscription = timer$.subscribe(
   value =>
-    (timesDiv.innerHTML += `${new Date().toLocaleDateString()} (${value}) <br>`),
+    (timesDiv.innerHTML += `${new Date().toLocaleTimeString()} (${value}) <br>`),
   null,
   () => console.log("All done!")
 );
+
+let timerConsoleSubscription = timer$.subscribe(value =>
+  console.log(`${new Date().toLocaleTimeString()} (${value})`)
+);
+
+timerSubscription.add(timerConsoleSubscription);
+// timerSubscription.remove(timerSubscription);
 
 fromEvent(button, "click").subscribe(event => timerSubscription.unsubscribe());
