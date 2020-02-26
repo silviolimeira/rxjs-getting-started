@@ -41,3 +41,8 @@ Creating Observables: Creating Observables to Handle Events
 // Creating You Own Operator: Creating New Operators from Existing Operators
 // https://app.pluralsight.com/course-player?clipId=2f55540c-66c1-4b29-b658-52ea0911373e
 
+
+// Using Subjects and Multicasted Observables: Producing Values with Subjects
+// https://app.pluralsight.com/course-player?clipId=befe7eb6-cfc2-4eec-8e2e-2111369491bb
+// Using Subjects and Multicasted Observables 
+
