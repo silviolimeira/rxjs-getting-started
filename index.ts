@@ -47,13 +47,24 @@ function grabClassics(year) {
   return filter(book => book.publicationYear < year);
 }
 
+function grabAndLogClassicsWithPipe(year, log) {
+  return source$ =>
+    source$.pipe(
+      filter(book => book.publicationYear < year),
+      tap(classicBook =>
+        log ? console.log(`Title: ${classicBook.title}`) : null
+      )
+    );
+}
+
 ajax("/api/books")
   .pipe(
     flatMap(ajaxResponse => ajaxResponse.response),
     // filter(book => book.publicationYear < 1950),
     // tap(oldBook => console.log(`Title: ${oldBook.title}`))
     // grabAndLogClassics(1950, true)
-    grabClassics(1950)
+    //grabClassics(1950)
+    grabAndLogClassicsWithPipe(1950, true)
   )
   .subscribe(
     finalValue => console.log(`VALUE: ${finalValue.title}`),
