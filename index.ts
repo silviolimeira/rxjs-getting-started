@@ -10,31 +10,47 @@ import {
   pipe,
   throwError
 } from "rxjs";
-import { map, filter, mergeMap, tap, catchError, take, takeUntil } from "rxjs/operators";
+import {
+  map,
+  filter,
+  mergeMap,
+  tap,
+  catchError,
+  take,
+  takeUntil,
+  flatMap
+} from "rxjs/operators";
 
-// Using Operators: Controling the Number of Values Produced
-// https://app.pluralsight.com/course-player?clipId=a3a6fd9c-2370-449b-a798-26a85bc67505
+// Creating You Own Operator: Creating New Operators with Observable Constructor
+// https://app.pluralsight.com/course-player?clipId=aed56564-d51a-47cb-a7ca-0e34486dfb03
 
-let timesDiv = document.getElementById("times");
-let button = document.getElementById("timerButton");
-
-let timer$ = new Observable(subscriber => {
-  let i = 0;
-  let intervalID = setInterval(() => {
-    subscriber.next(i++);
-  }, 1000);
-
-  return () => {
-    console.log("Executing teardown code.");
-    clearInterval(intervalID);
+function grabAndLogClassics(year, log) {
+  return source$ => {
+    return new Observable(subscriber => {
+      return source$.subscribe(
+        book => {
+          if (book.publicationYear < year) {
+            subscriber.next(book);
+            if (log) {
+              console.log(`Classic: ${book.title}`);
+            }
+          }
+        },
+        err => subscriber.error(err),
+        () => subscriber.complete()
+      );
+    });
   };
-});
+}
 
-let cancelTimer$ = fromEvent(button, 'click');
-
-timer$.pipe(takeUntil(cancelTimer$)).subscribe(
-  value =>
-    (timesDiv.innerHTML += `${new Date().toLocaleTimeString()} (${value}) <br>`),
-  null,
-  () => console.log("All done!")
-);
+ajax("/api/books")
+  .pipe(
+    flatMap(ajaxResponse => ajaxResponse.response),
+    // filter(book => book.publicationYear < 1950),
+    // tap(oldBook => console.log(`Title: ${oldBook.title}`))
+    grabAndLogClassics(1950, true)
+  )
+  .subscribe(
+    finalValue => console.log(`VALUE: ${finalValue.title}`),
+    error => console.log(`ERROR: ${error}`)
+  );

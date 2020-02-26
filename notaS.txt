@@ -34,3 +34,7 @@ Creating Observables: Creating Observables to Handle Events
 
 // Using Operators: Controling the Number of Values Produced
 // https://app.pluralsight.com/course-player?clipId=a3a6fd9c-2370-449b-a798-26a85bc67505
+
+// Creating You Own Operator: Creating New Operators with Observable Constructor
+// https://app.pluralsight.com/course-player?clipId=aed56564-d51a-47cb-a7ca-0e34486dfb03
+
