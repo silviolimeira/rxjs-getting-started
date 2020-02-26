@@ -30,7 +30,7 @@ import {
 
 https: let source$ = interval(1000).pipe(take(4));
 
-// convert to hot observable - multicas the value
+// convert to hot observable - multicast the value
 let subject$ = new Subject();
 source$.subscribe(subject$);
 
