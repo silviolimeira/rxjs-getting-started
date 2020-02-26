@@ -21,8 +21,8 @@ import {
   flatMap
 } from "rxjs/operators";
 
-// Creating You Own Operator: Creating New Operators with Observable Constructor
-// https://app.pluralsight.com/course-player?clipId=aed56564-d51a-47cb-a7ca-0e34486dfb03
+// Creating You Own Operator: Creating New Operators from Existing Operators
+// https://app.pluralsight.com/course-player?clipId=2f55540c-66c1-4b29-b658-52ea0911373e
 
 function grabAndLogClassics(year, log) {
   return source$ => {
@@ -43,12 +43,17 @@ function grabAndLogClassics(year, log) {
   };
 }
 
+function grabClassics(year) {
+  return filter(book => book.publicationYear < year);
+}
+
 ajax("/api/books")
   .pipe(
     flatMap(ajaxResponse => ajaxResponse.response),
     // filter(book => book.publicationYear < 1950),
     // tap(oldBook => console.log(`Title: ${oldBook.title}`))
-    grabAndLogClassics(1950, true)
+    // grabAndLogClassics(1950, true)
+    grabClassics(1950)
   )
   .subscribe(
     finalValue => console.log(`VALUE: ${finalValue.title}`),

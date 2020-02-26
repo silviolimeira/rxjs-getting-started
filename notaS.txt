@@ -38,3 +38,6 @@ Creating Observables: Creating Observables to Handle Events
 // Creating You Own Operator: Creating New Operators with Observable Constructor
 // https://app.pluralsight.com/course-player?clipId=aed56564-d51a-47cb-a7ca-0e34486dfb03
 
+// Creating You Own Operator: Creating New Operators from Existing Operators
+// https://app.pluralsight.com/course-player?clipId=2f55540c-66c1-4b29-b658-52ea0911373e
+
